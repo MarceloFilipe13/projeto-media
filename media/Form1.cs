@@ -48,7 +48,7 @@ namespace media
                     ((TextBox)controle).Text = "";
                 }
 
-                this.Controls["Label7"].Text = "...";
+                this.Controls["Label7"].Text = "...";//limpar media
             }
         }
     }
