@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace media
@@ -22,34 +15,58 @@ namespace media
 
         }
 
-        private void button1_Click(object sender, EventArgs e)//Calcular
+        private void button1_Click(object sender, EventArgs e) // Calcular
         {
-            float soma, media, valor;
-            soma = 0;
-
-            foreach (Control controle in this.Controls)
+            try
             {
-                if (controle is TextBox)
+                float soma = 0;
+                int count = 0;
+
+                foreach (Control controle in this.Controls)
                 {
-                    valor = Convert.ToSingle(((TextBox)controle).Text);
-                    soma += valor;
+                    if (controle is TextBox && controle.Visible)
+                    {
+                        soma += Convert.ToSingle(((TextBox)controle).Text);
+                        count++;
+                    }
                 }
-                media = soma / 4;
-                this.Controls["Label7"].Text = media.ToString();
+
+                if (count > 0)
+                {
+                    float media = soma / count;
+                    label7.Text = media.ToString();
+                }
+                else
+                {
+                    label7.Text = "N/A";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message);
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)//Limpar
+        private void button2_Click(object sender, EventArgs e) // Limpar
         {
             foreach (Control controle in this.Controls)
             {
                 if (controle is TextBox)
                 {
-                    ((TextBox)controle).Text = "";
+                    ((TextBox)controle).Text = string.Empty;
                 }
-
-                this.Controls["Label7"].Text = "...";//limpar media
             }
+            label7.Text = "...";
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e) // Clear Checkbox
+        {
+            bool isChecked = checkBox1.Checked;
+
+            label4.Visible = !isChecked;
+            label5.Visible = !isChecked;
+            textBox3.Visible = !isChecked;
+            textBox4.Visible = !isChecked;
         }
     }
 }
